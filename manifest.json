@@ -1,0 +1,13 @@
+{
+  "name": "EMR FPE",
+  "description": "Format Preserving Encryption for medical record",
+  "version": "1.0",
+  "manifest_version": 3,
+  "permissions": ["storage"],
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "action": {
+      "default_title": "EMR FPE Test"
+  }
+}

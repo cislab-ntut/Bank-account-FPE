@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <meta charset="utf-8">
+  <head>
+    <title>FPE EMR Test</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="js/lib/bundle.js"></script>
+    <script src="js/lib/crypto-js_4.0.0.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/fpe.js"></script>
+    <script src="js/utils.js"></script>
+  </head>
+  <body>
+    <div width=3000px>
+      <div class="floating">
+        <form id="form">
+          <fieldset class=hospital_code>
+            <label for="hospital_code">醫院名稱：</label>
+            <select id="hospital_code" name="hospital_code">
+              <option value="" selected>請選擇醫院...</option>
+            </select>
+          </fieldset>
+
+          <fieldset>
+            <label for="emr_no">病例號碼：</label>
+            <input type="text" id="emr_no" name="emr_no"/>
+          </fieldset>
+
+          <fieldset>
+            <label for="fullname">姓名：</label>
+            <input type="text" id="fullname" name="fullname"/>
+          </fieldset>
+
+          <fieldset>
+            <label for="personal_id">身份證字號：</label>
+            <input type="text" id="personal_id" name="personal_id"/>
+          </fieldset>
+
+          <fieldset>
+            <label for="birth">生日：</label>
+            <input type="date" id="birth" name="birth"/>
+          </fieldset>
+
+          <fieldset class=blood_type>
+            <label>血型：</label>
+            <label><input type="radio" name="blood_type" value="A" checked/>A</label>
+            <label><input type="radio" name="blood_type" value="B"/>B</label>
+            <label><input type="radio" name="blood_type" value="O"/>O</label>
+            <label><input type="radio" name="blood_type" value="AB"/>AB</label>
+          </fieldset>
+
+          <fieldset class=rh_blood_type>
+            <label>RH血型：</label>
+            <label><input type="radio" name="rh_blood_type" value="P" checked/>RH+</label>
+            <label><input type="radio" name="rh_blood_type" value="N"/>RH-</label>
+          </fieldset>
+
+          <fieldset class=insurance>
+            <label>健保身份別：</label>
+            <label><input type="radio" name="insurance" value="T" checked/>健保</label>
+            <label><input type="radio" name="insurance" value="F"/>非健保</label>
+          </fieldset>
+
+          <fieldset class="save_check_box">
+            <label><input name="save_check_box" type="checkbox"/>儲存</label>
+          </fieldset>
+
+          <fieldset class="post">
+            <label>送出至：<input type="text" id="post_url" name="post_url"/></label>
+          </fieldset>
+
+          <input id="submit" type="button" value="送出"/>
+        </form>
+        <label>
+          <input type="file" accept=".json" id="upload_enc" style="display:none" />
+          <input type="button"  id="upload_enc_btn" value="上傳" />
+        </label>
+        <pre id="enc"></pre>
+        <label>
+        <a href="#" id=export download="helper.json" style="display:none"></a>
+          <input type="button"  id="export_btn" value="匯出" style="display:none" />
+        </label>
+        <a href="#" id=download download="helper.json" style="display:none">匯出</a>
+      </div>
+      <div class=floating>
+        <form id="dec_form">
+          <fieldset class="get_url">
+            <label>從網址：<input type="text" id="get_url"/></label>
+            <input id="get_url_submit" type="button" value="送出"/>
+          </fieldset>
+
+          <fieldset class="dec_textarea">
+          <label for="encrypt_json">解密：</label>
+          <textarea id="encrypt_json" name="json" rows="30" cols="50"></textarea>
+          <input id="dec_submit" type="button" value="送出"/>
+          </fieldset>
+        </form>
+        <!--
+        <label>
+          <input type="file" accept=".json" id="upload_dec" style="display:none" />
+          <input type="button"  id="upload_dec_btn" value="上傳" />
+        </label>
+        -->
+        <label>
+          <input type="file" accept=".json" id="import" style="display:none" />
+          <input type="button"  id="import_btn" value="匯入" />
+        </label>
+        <pre id="dec"></pre>
+      </div>
+    </div>
+  </body>
+</html>
