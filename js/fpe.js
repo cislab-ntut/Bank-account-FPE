@@ -344,11 +344,11 @@ var emr_cipher = {
             idx, this.tables[table_name].length);
         return this.tables[table_name][dec_idx];
     },
-    encrypt_emr_no: function(emr_no) {
-        return this.ff3_cipher.encrypt(emr_no);
+    encrypt_account_no: function(account_no) {
+        return this.ff3_cipher.encrypt(account_no);
     },
-    decrypt_emr_no: function(emr_no) {
-        return this.ff3_cipher.decrypt(emr_no);
+    decrypt_account_no: function(account_no) {
+        return this.ff3_cipher.decrypt(account_no);
     },
     //map each combination in to numbers
     //integer FPE
@@ -420,7 +420,7 @@ var emr_cipher = {
         var data = {
             bank_code: dec_bank_code,
             bank_name: this.get_bank_name(dec_bank_code),
-            emr_no: this.decrypt_emr_no(entry.emr_no),
+            account_no: this.decrypt_account_no(entry.account_no),
             personal_id: this.decrypt_id(entry.personal_id),
             fullname: this.decrypt_last_name(
                     entry.name.last_name, helper_obj.last_name_table_length)
@@ -449,7 +449,7 @@ var emr_cipher = {
         var data = {
             bank_code: enc_bank_code,
             bank_name: this.get_bank_name(enc_bank_code),
-            emr_no: this.encrypt_emr_no(entry.emr_no),
+            account_no: this.encrypt_account_no(entry.account_no),
             personal_id: this.encrypt_id(entry.personal_id),
             fullname: enc_last_name.last_name + enc_given_name.given_name,
             birth: enc_birth.birth
