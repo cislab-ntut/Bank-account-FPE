@@ -182,9 +182,8 @@ var key_generator = {
         return this.hashes[idx];
     }
 };
-//encrpt whole emr
-var emr_cipher = {
-    blood_types: ["A", "B", "O", "AB"],
+//encrpt whole 
+var account_data_cipher = {
     securitiess: ["P", "N"],
     foreigns: ["T", "F"],
     create: function(key, tweak) {
@@ -352,34 +351,30 @@ var emr_cipher = {
     },
     //map each combination in to numbers
     //integer FPE
-    encrypt_others: function(blood_type, securities, foreign) {
-        var blood_idx = this.blood_types.indexOf(blood_type);
+    encrypt_others: function(securities, foreign) {
         var rh_idx = this.securitiess.indexOf(securities);
         var foreign_idx = this.foreigns.indexOf(foreign);
 
-        var idx = blood_idx + rh_idx * 4 + foreign_idx * 8;
-        var enc_idx = this.prefix_cipher.encrypt(idx, 16);
+        var idx = rh_idx * 1 + foreign_idx * 2;
+        var enc_idx = this.prefix_cipher.encrypt(idx, 4);
 
         return {
-            blood_type: this.blood_types[enc_idx % 4],
-            securities: this.securitiess[Math.floor((enc_idx % 8) / 4)],
-            foreign: this.foreigns[Math.floor(enc_idx / 8)]
+            securities: this.securitiess[Math.floor(enc_idx % 2)],
+            foreign: this.foreigns[Math.floor(enc_idx / 2)]
         };
     },
     //map each combination in to numbers
     //integer FPE
-    decrypt_others: function(blood_type, securities, foreign) {
-        var blood_idx = this.blood_types.indexOf(blood_type);
+    decrypt_others: function(securities, foreign) {
         var rh_idx = this.securitiess.indexOf(securities);
         var foreign_idx = this.foreigns.indexOf(foreign);
 
-        var idx = blood_idx + rh_idx * 4 + foreign_idx * 8;
-        var dec_idx = this.prefix_cipher.decrypt(idx, 16);
+        var idx = rh_idx * 1 + foreign_idx * 2;
+        var dec_idx = this.prefix_cipher.decrypt(idx, 4);
 
         return {
-            blood_type: this.blood_types[dec_idx % 4],
-            securities: this.securitiess[Math.floor((dec_idx % 8) / 4)],
-            foreign: this.foreigns[Math.floor(dec_idx / 8)]
+            securities: this.securitiess[Math.floor(dec_idx % 2)],
+            foreign: this.foreigns[Math.floor(dec_idx / 2)]
         };
     },
     get_bank_name: function(bank_code) {
@@ -415,7 +410,7 @@ var emr_cipher = {
         var dec_bank_code = this.decrypt_from_table(
             entry.bank_code, "bank_codes");
         var dec_others = this.decrypt_others(
-            entry.blood_type, entry.securities, entry.foreign);
+            entry.securities, entry.foreign);
 
         var data = {
             bank_code: dec_bank_code,
@@ -442,7 +437,7 @@ var emr_cipher = {
             entry.bank_code, "bank_codes");
         var enc_birth = this.encrypt_birth(entry.birth);
         var enc_others = this.encrypt_others(
-            entry.blood_type, entry.securities, entry.foreign);
+            entry.securities, entry.foreign);
         var enc_given_name = this.encrypt_given_name(entry.name.given_name);
         var enc_last_name = this.encrypt_last_name(entry.name.last_name);
 
@@ -490,7 +485,7 @@ var emr_cipher = {
     }
 };
 
-var cipher = emr_cipher.create(key, tweak);
+var cipher = account_data_cipher.create(key, tweak);
 //initialize index
 chrome.storage.sync.get(["index"], (result) => {
     if(typeof result.index !== 'undefined') {
