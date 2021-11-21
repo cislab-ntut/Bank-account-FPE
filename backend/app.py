@@ -15,7 +15,7 @@ CORS(app)
 def get_db():
     if "db" not in g:
         g.db = sqlite3.connect(
-                "emr.db",
+                "bank_account.db",
                 detect_types=sqlite3.PARSE_DECLTYPES)
         g.db.row_factory = sqlite3.Row
 
@@ -28,51 +28,31 @@ def close_db(e=None):
     if db is not None:
         db.close()
 
-@app.route("/search", methods=["GET"])
-def search():
-    db = get_db()
-    cursor = db.cursor()
-
-    request_args = dict(request.args)
-    if "name" in request.args:
-        request_args["name"] = "%" + request.args["name"] + "%"
-
-    select_sql = """SELECT a.name || b.name || c.name AS full_name
-                    FROM last_name AS a, given_name AS b, given_name AS c
-                    WHERE full_name LIKE '%:name%';"""
-
-    cursor.execute(select_sql, request_args)
-
-    search_name = [sha256(dict(row)["full_name"].encode()).hexdigest()
-                   for row in cursor.fetchall()]
-
 @app.route("/post/<idx>", methods=["POST"])
 def post(idx):
     db = get_db()
     cursor = db.cursor()
 
-    insert_sql = """INSERT INTO emr(
+    insert_sql = """INSERT INTO bank_account(
                     idx,
-                    hospital_code,
-                    hospital_name,
-                    emr_no,
+                    bank_code,
+                    bank_name,
+                    account_no,
                     personal_id,
                     fullname,
                     birth,
-                    blood_type,
-                    rh_blood_type,
-                    insurance)
+                    securities,
+                    foreign_currency)
                     VALUES(
                     :idx,
-                    :hospital_code,
-                    :hospital_name,
-                    :emr_no,
+                    :bank_code,
+                    :bank_name,
+                    :account_no,
                     :personal_id,
                     :fullname,
                     :birth,
-                    :blood_type,
-                    :rh_blood_type,
-                    :insurance);"""
+                    :securities,
+                    :foreign);"""
 
     row = dict(request.form)
     row["idx"] = idx
