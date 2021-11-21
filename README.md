@@ -30,3 +30,6 @@
 - key
     - 匯入 (加密後有匯出按鈕)
     - 從chrome stroage 拿 (加密勾選儲存)
+
+## 資料來源
+銀行資料來自 https://www.banking.gov.tw/ch/home.jsp?id=60&parentpath=0,4&mcustomize=FscSearch_BankType.jsp&type=1
