@@ -225,7 +225,7 @@ var emr_cipher = {
     },
     //resolve promise here
     read_tables: async function() {
-        var table_names = ["hospital_names", "hospital_codes"
+        var table_names = ["bank_names", "bank_codes"
             , "last_names", "given_names"];
         await Promise.all(table_names.map((e)=>this.read_table(e))).then(v => {
             table_names.forEach((name, i) => {
@@ -233,10 +233,10 @@ var emr_cipher = {
             });
         });
         //initialize hospital select in html
-        var select = document.getElementById('hospital_code');
-        cipher.tables["hospital_names"].forEach((e, i) => {
+        var select = document.getElementById('bank_code');
+        cipher.tables["bank_names"].forEach((e, i) => {
             var opt = document.createElement('option');
-            opt.value = cipher.tables["hospital_codes"][i];
+            opt.value = cipher.tables["bank_codes"][i];
             opt.innerHTML = e;
             select.appendChild(opt);
         });
@@ -382,9 +382,9 @@ var emr_cipher = {
             insurance: this.insurances[Math.floor(dec_idx / 8)]
         };
     },
-    get_hospital_name: function(hospital_code) {
-        var idx = this.tables["hospital_codes"].indexOf(hospital_code);
-        return this.tables["hospital_names"][idx];
+    get_bank_name: function(bank_code) {
+        var idx = this.tables["bank_codes"].indexOf(bank_code);
+        return this.tables["bank_names"][idx];
     },
     save_stroage: function(data, helper_obj, is_saved) {
         if(is_saved) {
@@ -412,14 +412,14 @@ var emr_cipher = {
 
         entry["name"] = split_name(entry["fullname"]);
 
-        var dec_hospital_code = this.decrypt_from_table(
-            entry.hospital_code, "hospital_codes");
+        var dec_bank_code = this.decrypt_from_table(
+            entry.bank_code, "bank_codes");
         var dec_others = this.decrypt_others(
             entry.blood_type, entry.rh_blood_type, entry.insurance);
 
         var data = {
-            hospital_code: dec_hospital_code,
-            hospital_name: this.get_hospital_name(dec_hospital_code),
+            bank_code: dec_bank_code,
+            bank_name: this.get_bank_name(dec_bank_code),
             emr_no: this.decrypt_emr_no(entry.emr_no),
             personal_id: this.decrypt_id(entry.personal_id),
             fullname: this.decrypt_last_name(
@@ -438,8 +438,8 @@ var emr_cipher = {
 
         entry["name"] = split_name(entry["fullname"]);
 
-        var enc_hospital_code = this.encrypt_from_table(
-            entry.hospital_code, "hospital_codes");
+        var enc_bank_code = this.encrypt_from_table(
+            entry.bank_code, "bank_codes");
         var enc_birth = this.encrypt_birth(entry.birth);
         var enc_others = this.encrypt_others(
             entry.blood_type, entry.rh_blood_type, entry.insurance);
@@ -447,8 +447,8 @@ var emr_cipher = {
         var enc_last_name = this.encrypt_last_name(entry.name.last_name);
 
         var data = {
-            hospital_code: enc_hospital_code,
-            hospital_name: this.get_hospital_name(enc_hospital_code),
+            bank_code: enc_bank_code,
+            bank_name: this.get_bank_name(enc_bank_code),
             emr_no: this.encrypt_emr_no(entry.emr_no),
             personal_id: this.encrypt_id(entry.personal_id),
             fullname: enc_last_name.last_name + enc_given_name.given_name,
