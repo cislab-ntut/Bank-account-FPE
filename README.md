@@ -30,6 +30,3 @@
 - key
     - 匯入 (加密後有匯出按鈕)
     - 從chrome stroage 拿 (加密勾選儲存)
-
-## TODO
-- 修正sql scheme
