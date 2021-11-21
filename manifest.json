@@ -1,6 +1,6 @@
 {
-  "name": "EMR FPE",
-  "description": "Format Preserving Encryption for medical record",
+  "name": "bank account FPE",
+  "description": "Format Preserving Encryption for bank account data",
   "version": "1.0",
   "manifest_version": 3,
   "permissions": ["storage"],
@@ -8,6 +8,6 @@
     "service_worker": "js/background.js"
   },
   "action": {
-      "default_title": "EMR FPE Test"
+      "default_title": "bank account FPE Test"
   }
 }
